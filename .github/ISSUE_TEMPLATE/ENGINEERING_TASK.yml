@@ -1,0 +1,74 @@
+name: Engineering Task
+description: Technical work item for the engineering team
+title: "[TASK] "
+labels: ["engineering", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for technical engineering tasks, infrastructure work, or refactoring.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: What needs to be done?
+      placeholder: "Clear description of the engineering task..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What defines completion?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_approach
+    attributes:
+      label: Technical Approach
+      description: How should this be implemented?
+      placeholder: "Technical implementation details and approach..."
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Other tasks or issues this depends on
+      placeholder: "Related issues: #123, #456"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact_area
+    attributes:
+      label: Affected Components
+      description: Which parts of the system are affected?
+      placeholder: |
+        - Activity Engine
+        - Database schema
+        - API endpoints
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources & References
+      description: Links to documentation or related materials
