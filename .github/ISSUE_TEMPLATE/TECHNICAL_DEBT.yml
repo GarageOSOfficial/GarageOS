@@ -1,0 +1,77 @@
+name: Technical Debt
+description: Track code quality or performance improvements
+title: "[DEBT] "
+labels: ["technical-debt", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Track technical debt that should be addressed to improve code quality, maintainability, or performance.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is the technical debt?
+      placeholder: "Description of the technical debt issue..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: How does this debt affect the system?
+      placeholder: |
+        - Affects maintainability of...
+        - Impacts performance by...
+        - Creates technical risk...
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Location in Codebase
+      description: Where is this debt located?
+      placeholder: |
+        - File: src/services/activity/engine.ts
+        - Lines: 45-120
+        - Related function: processActivity()
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_fix
+    attributes:
+      label: Suggested Fix
+      description: How could this be improved?
+      placeholder: "Approach to resolving this technical debt..."
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Low - Nice to have
+        - Medium - Should address in next cycle
+        - High - Address before next release
+        - Critical - Blocks current work
+    validations:
+      required: true
+
+  - type: textarea
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: Rough estimate of work required
+      placeholder: "Small (1-2 days) / Medium (3-5 days) / Large (1+ weeks) / Unknown"
+
+  - type: textarea
+    id: related_decisions
+    attributes:
+      label: Related Architecture Decisions
+      description: Does this relate to any decisions in DECISIONS.md?
+      placeholder: "Reference decision numbers if applicable"
