@@ -13,12 +13,19 @@
     "preview": {
       "distribution": "internal",
       "ios": {
+        "simulator": false,
         "resourceClass": "m1"
+      },
+      "android": {
+        "resourceClass": "medium"
       }
     },
     "production": {
       "ios": {
         "resourceClass": "m1"
+      },
+      "android": {
+        "resourceClass": "medium"
       }
     }
   },
@@ -31,6 +38,13 @@
       },
       "android": {
         "serviceAccount": "$ANDROID_SERVICE_ACCOUNT"
+      }
+    },
+    "preview": {
+      "ios": {
+        "appleId": "$APPLE_ID",
+        "ascAppId": "$ASC_APP_ID",
+        "appleTeamId": "$APPLE_TEAM_ID"
       }
     }
   }
