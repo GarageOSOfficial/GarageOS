@@ -1,0 +1,28 @@
+# CODEOWNERS — Garage OS™
+#
+# This file defines code review ownership.
+# All PRs to main require review from the designated owner.
+# Format: <pattern> <owner>
+
+# Default: all code requires review
+* @GarageOSOfficial
+
+# Architecture and governance documents
+DECISIONS.md @GarageOSOfficial
+ARCHITECTURE_BASELINE_v0.3.4.md @GarageOSOfficial
+CONTRIBUTING.md @GarageOSOfficial
+ROADMAP.md @GarageOSOfficial
+
+# CI/CD workflows — critical path
+.github/workflows/ @GarageOSOfficial
+
+# Issue and PR templates
+.github/ISSUE_TEMPLATE/ @GarageOSOfficial
+.github/PULL_REQUEST_TEMPLATE.md @GarageOSOfficial
+.github/pull_request_template.md @GarageOSOfficial
+
+# App configuration — frozen under Architecture Baseline v0.3.4
+app.json @GarageOSOfficial
+eas.json @GarageOSOfficial
+package.json @GarageOSOfficial
+tsconfig.json @GarageOSOfficial

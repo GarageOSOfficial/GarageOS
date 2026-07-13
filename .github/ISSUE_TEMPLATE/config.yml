@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Garage OS Architecture Baseline v0.3.4
+    url: https://github.com/GarageOSOfficial/GarageOS/blob/main/ARCHITECTURE_BASELINE_v0.3.4.md
+    about: Review the Architecture Baseline before submitting engineering tasks.
+  - name: Architecture Decisions (DECISIONS.md)
+    url: https://github.com/GarageOSOfficial/GarageOS/blob/main/DECISIONS.md
+    about: Review all locked architectural decisions before submitting issues.
+  - name: Contributing Guidelines
+    url: https://github.com/GarageOSOfficial/GarageOS/blob/main/CONTRIBUTING.md
+    about: Engineering principles and contribution standards.
