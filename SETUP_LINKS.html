@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage OS - Credentials Setup Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .status h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .status-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+            color: white;
+            font-size: 12px;
+        }
+        .status-check.done {
+            background: #10b981;
+        }
+        .status-check.waiting {
+            background: #f59e0b;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #1f2937;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .step {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .step h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .step ol {
+            margin-left: 20px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+        .step li {
+            margin-bottom: 10px;
+        }
+        .link-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .link-button:hover {
+            background: #764ba2;
+        }
+        .link-button.secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        .link-button.secondary:hover {
+            background: #d1d5db;
+        }
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #78350f;
+        }
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #065f46;
+        }
+        .github-secret {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #1f2937;
+            overflow-x: auto;
+        }
+        .github-secret .name {
+            color: #667eea;
+            font-weight: bold;
+        }
+        .footer {
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .checklist {
+            list-style: none;
+        }
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9fafb;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .checklist li:before {
+            content: "☐";
+            margin-right: 10px;
+            font-size: 18px;
+            color: #667eea;
+        }
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            .header {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Garage OS CI/CD Setup</h1>
+            <p>Complete Credentials Setup for Continuous Delivery</p>
+        </div>
+
+        <div class="content">
+            <!-- Status Section -->
+            <div class="status">
+                <h2>📊 Current Status</h2>
+                <div class="status-item">
+                    <div class="status-check done">✓</div>
+                    <strong>Phase 1 Complete:</strong> Workflow files created
+                </div>
+                <div class="status-item">
+                    <div class="status-check waiting">⏳</div>
+                    <strong>Phase 2 In Progress:</strong> Getting credentials
+                </div>
+                <div class="status-item">
+                    <div class="status-check waiting">⏳</div>
+                    <strong>Phase 3 Pending:</strong> Add secrets to GitHub
+                </div>
+            </div>
+
+            <!-- Phase 1 Complete -->
+            <div class="section">
+                <h2>✅ Phase 1: Already Known</h2>
+                <div class="github-secret">
+                    <span class="name">EAS_PROJECT_ID</span> = c7cfc85b-904f-4d2a-8fbb-1aec8f51aecb
+                </div>
+                <div class="github-secret">
+                    <span class="name">APPLE_ID</span> = admin@garageos.co
+                </div>
+                <p style="margin-top: 15px; color: #6b7280; font-size: 14px;">These two are ready to add to GitHub Secrets.</p>
+            </div>
+
+            <!-- Phase 2: Get Credentials -->
+            <div class="section">
+                <h2>⏳ Phase 2: Get Credentials Now (Open These Links)</h2>
+
+                <!-- Step 1 -->
+                <div class="step">
+                    <h3><span class="step-number">1</span>Get APPLE_ID_PASSWORD</h3>
+                    <ol>
+                        <li>Click the button below to open Apple ID Management</li>
+                        <li>Sign in with: <strong>admin@garageos.co</strong></li>
+                        <li>Click <strong>"Security"</strong> in the sidebar</li>
+                        <li>Click <strong>"App-specific passwords"</strong></li>
+                        <li>Click <strong>"Generate password"</strong></li>
+                        <li>Select <strong>"GitHub Actions"</strong> as the app</li>
+                        <li>Click <strong>"Generate"</strong></li>
+                        <li><strong>COPY THE PASSWORD IMMEDIATELY</strong> (format: xxxx-xxxx-xxxx-xxxx)</li>
+                        <li>Save it somewhere safe - it only shows once!</li>
+                    </ol>
+                    <a href="https://appleid.apple.com/account/manage" class="link-button" target="_blank">📱 Open Apple ID Management</a>
+                    <div class="info-box">
+                        ⚠️ <strong>Important:</strong> The password will only display once. Copy it immediately and save it securely.
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step">
+                    <h3><span class="step-number">2</span>Get APPLE_TEAM_ID</h3>
+                    <ol>
+                        <li>Click the button below to open Apple Developer Account</li>
+                        <li>Sign in with: <strong>admin@garageos.co</strong></li>
+                        <li>Click <strong>"Membership"</strong> in the sidebar</li>
+                        <li>Look for <strong>"Team ID"</strong> field (10 characters like: ABCD1234EF)</li>
+                        <li><strong>COPY THE TEAM ID</strong></li>
+                    </ol>
+                    <a href="https://developer.apple.com/account" class="link-button" target="_blank">👨‍💻 Open Apple Developer Account</a>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step">
+                    <h3><span class="step-number">3</span>Create App Store Connect App & Get ASC_APP_ID</h3>
+                    <ol>
+                        <li>Click the button below to open App Store Connect</li>
+                        <li>Sign in with: <strong>admin@garageos.co</strong></li>
+                        <li>Click <strong>"Apps"</strong> in the sidebar</li>
+                        <li>Click the <strong>"+"</strong> button to create a new app</li>
+                        <li>Fill in the form:
+                            <ul style="margin-top: 8px; margin-left: 20px;">
+                                <li><strong>Platform:</strong> iOS</li>
+                                <li><strong>Name:</strong> Garage OS</li>
+                                <li><strong>Primary Language:</strong> English</li>
+                                <li><strong>Bundle ID:</strong> com.garageos.mobile</li>
+                                <li><strong>SKU:</strong> garageos-mobile</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>"Create"</strong></li>
+                        <li>Click <strong>"App Information"</strong> in the sidebar</li>
+                        <li>Find the <strong>"Apple ID"</strong> field (a number like: 1234567890)</li>
+                        <li><strong>COPY THE APPLE ID NUMBER</strong> (NOT the Bundle ID)</li>
+                    </ol>
+                    <a href="https://appstoreconnect.apple.com" class="link-button" target="_blank">🏪 Open App Store Connect</a>
+                    <div class="info-box">
+                        ⚠️ <strong>Important:</strong> Copy the Apple ID NUMBER, not the Bundle ID. They look different!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Add to GitHub -->
+            <div class="section">
+                <h2>➕ Phase 3: Add Secrets to GitHub</h2>
+                <p style="color: #6b7280; margin-bottom: 20px;">Once you have all the credentials from Phase 2, add them to GitHub Secrets:</p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span>Go to GitHub Secrets</h3>
+                    <ol>
+                        <li>Click the button below (or use link in browser)</li>
+                        <li>You should already be logged in</li>
+                    </ol>
+                    <a href="https://github.com/GarageOSOfficial/GarageOS/settings/secrets/actions" class="link-button" target="_blank">🔑 Open GitHub Secrets</a>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Add Each Secret</h3>
+                    <p style="margin-bottom: 15px;">For each item below, repeat these steps:</p>
+                    <ol>
+                        <li>Click <strong>"New repository secret"</strong></li>
+                        <li>Enter the Name (exactly as shown)</li>
+                        <li>Paste the Value (from Phase 2)</li>
+                        <li>Click <strong>"Add secret"</strong></li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h3>📝 Secrets to Add</h3>
+                    <ul class="checklist">
+                        <li><strong>Name:</strong> EAS_PROJECT_ID<br><strong>Value:</strong> c7cfc85b-904f-4d2a-8fbb-1aec8f51aecb</li>
+                        <li><strong>Name:</strong> APPLE_ID<br><strong>Value:</strong> admin@garageos.co</li>
+                        <li><strong>Name:</strong> APPLE_ID_PASSWORD<br><strong>Value:</strong> (from Step 1 above)</li>
+                        <li><strong>Name:</strong> APPLE_TEAM_ID<br><strong>Value:</strong> (from Step 2 above)</li>
+                        <li><strong>Name:</strong> ASC_APP_ID<br><strong>Value:</strong> (from Step 3 above)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Phase 4: Test -->
+            <div class="section">
+                <h2>🧪 Phase 4: Test the Workflow</h2>
+                <div class="step">
+                    <h3><span class="step-number">1</span>Push a Test Commit</h3>
+                    <ol>
+                        <li>Open Terminal/Command Prompt</li>
+                        <li>Run these commands:
+                            <div style="background: #1f2937; color: #10b981; padding: 12px; border-radius: 6px; margin: 10px 0; font-family: monospace; font-size: 12px; overflow-x: auto;">
+git commit --allow-empty -m "test: verify CI/CD workflow"<br>
+git push origin main
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Watch the Build</h3>
+                    <ol>
+                        <li>Go to: <a href="https://github.com/GarageOSOfficial/GarageOS/actions" target="_blank">GitHub Actions</a></li>
+                        <li>Click the latest <strong>"Build, Test, and Deploy iOS"</strong> run</li>
+                        <li>Watch progress in real-time</li>
+                        <li>Build should complete in 15-20 minutes</li>
+                    </ol>
+                    <a href="https://github.com/GarageOSOfficial/GarageOS/actions" class="link-button" target="_blank">👀 Watch GitHub Actions</a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="section">
+                <h2>🔗 Quick Links</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <a href="https://appleid.apple.com/account/manage" class="link-button secondary" target="_blank">🍎 Apple ID</a>
+                    <a href="https://developer.apple.com/account" class="link-button secondary" target="_blank">👨‍💻 Developer Account</a>
+                    <a href="https://appstoreconnect.apple.com" class="link-button secondary" target="_blank">🏪 App Store Connect</a>
+                    <a href="https://github.com/GarageOSOfficial/GarageOS/settings/secrets/actions" class="link-button secondary" target="_blank">🔑 GitHub Secrets</a>
+                    <a href="https://github.com/GarageOSOfficial/GarageOS/actions" class="link-button secondary" target="_blank">⚙️ GitHub Actions</a>
+                    <a href="https://github.com/GarageOSOfficial/GarageOS" class="link-button secondary" target="_blank">📦 Repository</a>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="success-box">
+                <strong>✨ Once Complete:</strong> Every commit to main will automatically:
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>✅ Run linting & tests</li>
+                    <li>✅ Build iOS app</li>
+                    <li>✅ Submit to TestFlight</li>
+                    <li>✅ Notify your team</li>
+                    <li>✅ Ready to install on iPhone</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Garage OS Continuous Delivery Setup</strong></p>
+            <p style="margin-top: 10px; font-size: 12px;">For full documentation, see: <a href="https://github.com/GarageOSOfficial/GarageOS/blob/main/SECRETS_SETUP_GUIDE.md" target="_blank">SECRETS_SETUP_GUIDE.md</a></p>
+            <p style="margin-top: 5px; font-size: 12px;">Last Updated: 2026-07-13 | Status: Ready for Phase 2</p>
+        </div>
+    </div>
+</body>
+</html>
