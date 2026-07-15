@@ -1,1 +1,56 @@
-{\n  \"name\": \"garage-os\",\n  \"version\": \"0.1.0\",\n  \"description\": \"Garage OS - Vehicle Build Documentation & Collaboration Platform\",\n  \"main\": \"expo-router/entry\",\n  \"scripts\": {\n    \"start\": \"expo start\",\n    \"android\": \"expo start --android\",\n    \"ios\": \"expo start --ios\",\n    \"web\": \"expo start --web\",\n    \"test\": \"jest\",\n    \"lint\": \"eslint . --ext .js,.jsx,.ts,.tsx\",\n    \"type-check\": \"tsc --noEmit\",\n    \"build:android\": \"eas build --platform android\",\n    \"build:ios\": \"eas build --platform ios\",\n    \"build:web\": \"expo export --platform web\"\n  },\n  \"dependencies\": {\n    \"react\": \"18.2.0\",\n    \"react-native\": \"0.73.6\",\n    \"expo\": \"^50.0.0\",\n    \"expo-router\": \"^3.4.0\",\n    \"expo-status-bar\": \"~1.11.1\",\n    \"expo-image-picker\": \"~14.7.1\",\n    \"expo-file-system\": \"~16.0.6\",\n    \"expo-image\": \"~4.8.0\",\n    \"@react-navigation/native\": \"^6.1.9\",\n    \"@react-navigation/bottom-tabs\": \"^6.5.20\",\n    \"react-native-screens\": \"~3.27.0\",\n    \"react-native-safe-area-context\": \"4.8.2\",\n    \"react-native-gesture-handler\": \"~2.14.1\",\n    \"react-native-reanimated\": \"~3.6.0\",\n    \"@tanstack/react-query\": \"^5.35.1\",\n    \"zustand\": \"^4.4.7\",\n    \"axios\": \"^1.6.5\",\n    \"nativewind\": \"^2.0.11\",\n    \"tailwindcss\": \"3.3.0\",\n    \"react-native-svg\": \"14.1.0\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"~18.2.37\",\n    \"@types/react-native\": \"^0.73.0\",\n    \"@types/jest\": \"^29.5.10\",\n    \"typescript\": \"^5.3.3\",\n    \"jest\": \"^29.7.0\",\n    \"jest-expo\": \"^50.0.1\",\n    \"eslint\": \"^8.54.0\",\n    \"eslint-config-expo\": \"^7.0.0\",\n    \"prettier\": \"^3.1.0\",\n    \"@react-native-async-storage/async-storage\": \"~1.23.1\"\n  },\n  \"private\": true,\n  \"engines\": {\n    \"node\": \">= 18.0.0\"\n  }\n}\n
+{
+  "name": "garage-os",
+  "version": "0.1.0",
+  "description": "Garage OS - Vehicle Build Documentation & Collaboration Platform",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "type-check": "tsc --noEmit",
+    "build:android": "eas build --platform android",
+    "build:ios": "eas build --platform ios",
+    "build:web": "expo export --platform web"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.73.6",
+    "expo": "^50.0.0",
+    "expo-router": "^3.4.0",
+    "expo-status-bar": "~1.11.1",
+    "expo-image-picker": "~14.7.1",
+    "expo-file-system": "~16.0.6",
+    "expo-image": "~4.8.0",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/bottom-tabs": "^6.5.20",
+    "react-native-screens": "~3.27.0",
+    "react-native-safe-area-context": "4.8.2",
+    "react-native-gesture-handler": "~2.14.1",
+    "react-native-reanimated": "~3.6.0",
+    "@tanstack/react-query": "^5.35.1",
+    "zustand": "^4.4.7",
+    "axios": "^1.6.5",
+    "nativewind": "^2.0.11",
+    "tailwindcss": "3.3.0",
+    "react-native-svg": "14.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.37",
+    "@types/react-native": "^0.73.0",
+    "@types/jest": "^29.5.10",
+    "typescript": "^5.3.3",
+    "jest": "^29.7.0",
+    "jest-expo": "^50.0.1",
+    "eslint": "^8.54.0",
+    "eslint-config-expo": "^7.0.0",
+    "prettier": "^3.1.0",
+    "@react-native-async-storage/async-storage": "~1.23.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">= 18.0.0"
+  }
+}
