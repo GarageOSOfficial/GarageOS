@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 export default function HomeScreen() {
   return (
 <View style={styles.container}>
-<Text style={styles.title}>GarageOS</Text>
+<Text style={styles.title}>WRNC</Text>
 <Text style={styles.subtitle}>Mission Control</Text>
 <View style={styles.card}>
 <Text style={styles.cardTitle}>🚗 My Garage</Text>
