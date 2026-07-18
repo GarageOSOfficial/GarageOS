@@ -6,3 +6,7 @@ export interface AuthCredentials {
 export interface PasswordResetPayload {
   email: string;
 }
+
+export interface AuthActionResult {
+  error: string | null;
+}
