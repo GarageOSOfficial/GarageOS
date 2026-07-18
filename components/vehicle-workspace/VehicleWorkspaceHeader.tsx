@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-type WorkspaceSection = 'overview' | 'timeline' | 'photos' | 'about';
+type WorkspaceSection = 'overview' | 'timeline' | 'photos' | 'documents' | 'about';
 
 interface VehicleWorkspaceHeaderProps {
   vehicleId: string;
@@ -15,6 +15,7 @@ const sections: { key: WorkspaceSection; label: string }[] = [
   { key: 'overview', label: 'Overview' },
   { key: 'timeline', label: 'Timeline' },
   { key: 'photos', label: 'Photos' },
+  { key: 'documents', label: 'Documents' },
   { key: 'about', label: 'About' },
 ];
 

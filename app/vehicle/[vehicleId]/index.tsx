@@ -9,16 +9,18 @@ import {
   RecentActivityList,
   VehicleWorkspaceHeader,
 } from '@/components/vehicle-workspace';
-import { buildActivityDocumentationHooks } from '@/services/api';
+import { buildActivityDocumentationHooks, calculateDocumentationScore } from '@/services/api';
 
 import { useVehicleActivities } from './use-activities';
+import { useVehicleDocuments } from './use-documents';
 import { useVehicleWorkspace } from './workspace';
 
 export default function VehicleOverviewScreen() {
   const { vehicle, user, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
-  const { activities } = useVehicleActivities(user?.id, vehicleId);
+  const { activities, isLoading: isLoadingActivities } = useVehicleActivities(user?.id, vehicleId);
+  const { documents, isLoading: isLoadingDocuments } = useVehicleDocuments(user?.id, vehicleId);
 
-  if (isLoading) {
+  if (isLoading || isLoadingActivities || isLoadingDocuments) {
     return (
       <View style={styles.loadingWrap}>
         <ActivityIndicator size="large" color="#93C5FD" />
@@ -35,6 +37,16 @@ export default function VehicleOverviewScreen() {
   }
 
   const documentationHooks = buildActivityDocumentationHooks(activities);
+  const activityPhotoCount = activities.reduce((sum, activity) => sum + activity.photos.length, 0);
+  const maintenanceActivitiesCount = activities.filter((activity) => activity.activity_type === 'Maintenance').length;
+  const documentationScore = calculateDocumentationScore(
+    vehicle,
+    activities.length,
+    activityPhotoCount,
+    documents,
+    maintenanceActivitiesCount
+  );
+
   const recentActivities = activities.slice(0, 3).map((activity) => ({
     id: activity.id,
     title: activity.title,
@@ -72,10 +84,14 @@ export default function VehicleOverviewScreen() {
 
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Documentation Score</Text>
-        <Text style={styles.placeholderText}>Score calculation is coming in a future sprint.</Text>
+        <Text style={styles.scoreText}>{documentationScore.totalScore}%</Text>
+        {documentationScore.categories.map((category) => (
+          <Text key={category.key} style={styles.hookText}>
+            {category.label}: {category.score}%
+          </Text>
+        ))}
+        <Text style={styles.hookText}>Total documents: {documents.length}</Text>
         <Text style={styles.hookText}>Activities logged: {documentationHooks.totalActivities}</Text>
-        <Text style={styles.hookText}>With photos: {documentationHooks.activitiesWithPhotos}</Text>
-        <Text style={styles.hookText}>With attachments: {documentationHooks.activitiesWithAttachments}</Text>
         {documentationHooks.lastActivityDate ? (
           <Text style={styles.hookText}>Last activity: {formatActivityDate(documentationHooks.lastActivityDate)}</Text>
         ) : null}
@@ -162,6 +178,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 6,
   },
+  scoreText: {
+    color: '#86EFAC',
+    fontSize: 32,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
   metaText: {
     color: '#CBD5E1',
     marginTop: 4,
@@ -171,9 +193,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: '700',
     marginTop: 2,
-  },
-  placeholderText: {
-    color: '#CBD5E1',
   },
   hookText: {
     color: '#CBD5E1',

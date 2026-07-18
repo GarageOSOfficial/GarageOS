@@ -23,7 +23,8 @@ export function calculateDocumentationScore(
   vehicle: Vehicle,
   activitiesCount: number,
   activityPhotoCount: number,
-  documents: VehicleDocument[]
+  documents: VehicleDocument[],
+  maintenanceActivitiesCount = 0
 ): DocumentationScore {
   const countByType = (type: VehicleDocument['document_type']) =>
     documents.filter((document) => document.document_type === type).length;
@@ -47,7 +48,7 @@ export function calculateDocumentationScore(
     return Boolean(field);
   }).length;
 
-  const maintenanceRecordsCount = activitiesCount + countByType('Inspection Reports');
+  const maintenanceRecordsCount = maintenanceActivitiesCount + countByType('Inspection Reports');
 
   const requiredDocumentCategories: VehicleDocument['document_type'][] = ['Registration', 'Insurance'];
   const requiredDocumentsCompleted = requiredDocumentCategories.filter((type) => countByType(type) > 0).length;
@@ -113,6 +114,7 @@ export async function getVehicleBuildPassportData(userId: string, vehicleId: str
   }
 
   const activityPhotoCount = activitiesResult.data.reduce((sum, activity) => sum + activity.photos.length, 0);
+  const maintenanceActivitiesCount = activitiesResult.data.filter((activity) => activity.activity_type === 'Maintenance').length;
 
   return {
     data: {
@@ -123,7 +125,8 @@ export async function getVehicleBuildPassportData(userId: string, vehicleId: str
         vehicleResult.data,
         activitiesResult.data.length,
         activityPhotoCount,
-        documentsResult.data
+        documentsResult.data,
+        maintenanceActivitiesCount
       ),
     } satisfies BuildPassportData,
     error: null,
