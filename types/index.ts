@@ -3,4 +3,5 @@
  */
 
 export * from './auth';
+export * from './garage';
 export * from './Vehicle';
