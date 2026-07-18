@@ -1,6 +1,8 @@
-# Garage OS Mobile App
+# WRNC
 
-Expo-based mobile application for Garage OS - Vehicle Build Documentation & Collaboration Platform.
+> **WRNC is the evolution and official rebrand of GarageOS.** All development, history, and features of GarageOS continue forward under the WRNC name. GarageOS is now WRNC.
+
+Expo-based mobile application for WRNC — Vehicle Build Documentation & Collaboration Platform.
 
 ## Project Structure
 
@@ -290,8 +292,8 @@ npm run type-check
 Create `.env.local`:
 
 ```
-EXPO_PUBLIC_API_URL=https://api.garageos.local
-EXPO_PUBLIC_WS_URL=wss://ws.garageos.local
+EXPO_PUBLIC_API_URL=https://api.wrnc.app
+EXPO_PUBLIC_WS_URL=wss://ws.wrnc.app
 ```
 
 ## Deployment
@@ -325,7 +327,7 @@ EXPO_PUBLIC_WS_URL=wss://ws.garageos.local
 
 ## License
 
-Garage OS™ - All rights reserved
+WRNC™ — All rights reserved. Formerly known as GarageOS.
 
 ---
 
