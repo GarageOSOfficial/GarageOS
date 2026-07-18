@@ -1,17 +1,22 @@
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 
-import { QuickStats, RecentActivityList, VehicleWorkspaceHeader } from '@/components/vehicle-workspace';
+import {
+  activitySummary,
+  formatActivityDate,
+  QuickStats,
+  RecentActivityList,
+  VehicleWorkspaceHeader,
+} from '@/components/vehicle-workspace';
+import { buildActivityDocumentationHooks } from '@/services/api';
 
+import { useVehicleActivities } from './use-activities';
 import { useVehicleWorkspace } from './workspace';
 
-const placeholderRecentActivity = [
-  { id: '1', title: 'Engine tune-up recorded', detail: 'Placeholder activity entry • 3 days ago' },
-  { id: '2', title: 'Photo set reviewed', detail: 'Placeholder activity entry • 1 week ago' },
-];
-
 export default function VehicleOverviewScreen() {
-  const { vehicle, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { vehicle, user, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { activities } = useVehicleActivities(user?.id, vehicleId);
 
   if (isLoading) {
     return (
@@ -28,6 +33,13 @@ export default function VehicleOverviewScreen() {
       </View>
     );
   }
+
+  const documentationHooks = buildActivityDocumentationHooks(activities);
+  const recentActivities = activities.slice(0, 3).map((activity) => ({
+    id: activity.id,
+    title: activity.title,
+    detail: `${formatActivityDate(activity.activity_date)} • ${activitySummary(activity.description)}`,
+  }));
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -60,11 +72,32 @@ export default function VehicleOverviewScreen() {
 
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Documentation Score</Text>
-        <Text style={styles.placeholderText}>Placeholder metric will be available in a future sprint.</Text>
+        <Text style={styles.placeholderText}>Score calculation is coming in a future sprint.</Text>
+        <Text style={styles.hookText}>Activities logged: {documentationHooks.totalActivities}</Text>
+        <Text style={styles.hookText}>With photos: {documentationHooks.activitiesWithPhotos}</Text>
+        <Text style={styles.hookText}>With attachments: {documentationHooks.activitiesWithAttachments}</Text>
+        {documentationHooks.lastActivityDate ? (
+          <Text style={styles.hookText}>Last activity: {formatActivityDate(documentationHooks.lastActivityDate)}</Text>
+        ) : null}
       </View>
 
       <Text style={styles.sectionHeader}>Recent Activity</Text>
-      <RecentActivityList activities={placeholderRecentActivity} emptyMessage="Activity feed is not available yet." />
+      <RecentActivityList
+        activities={recentActivities}
+        emptyMessage="No activities yet. Use New Activity to log your first entry."
+      />
+      {recentActivities.length ? (
+        <Text
+          style={styles.linkText}
+          onPress={() =>
+            router.push({
+              pathname: '/vehicle/[vehicleId]/timeline',
+              params: { vehicleId },
+            })
+          }>
+          View full timeline
+        </Text>
+      ) : null}
     </ScrollView>
   );
 }
@@ -141,5 +174,13 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     color: '#CBD5E1',
+  },
+  hookText: {
+    color: '#CBD5E1',
+    marginTop: 4,
+  },
+  linkText: {
+    color: '#93C5FD',
+    fontWeight: '600',
   },
 });

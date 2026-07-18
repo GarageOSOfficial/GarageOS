@@ -1,19 +1,22 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
+import { router } from 'expo-router';
 
-import { VehicleWorkspaceHeader } from '@/components/vehicle-workspace';
+import {
+  activitySummary,
+  activityTypeIcon,
+  formatActivityDate,
+  VehicleWorkspaceHeader,
+} from '@/components/vehicle-workspace';
 
+import { useVehicleActivities } from './use-activities';
 import { useVehicleWorkspace } from './workspace';
 
-const timelineItems = [
-  { id: '1', date: '2026-07-15', title: 'Oil service logged', detail: 'Placeholder timeline item.' },
-  { id: '2', date: '2026-07-08', title: 'Brake inspection completed', detail: 'Placeholder timeline item.' },
-  { id: '3', date: '2026-07-01', title: 'Photo album synced', detail: 'Placeholder timeline item.' },
-];
-
 export default function VehicleTimelineScreen() {
-  const { vehicle, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { vehicle, user, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { activities, isLoading: isLoadingActivities, errorMessage } = useVehicleActivities(user?.id, vehicleId);
 
-  if (isLoading) {
+  if (isLoading || isLoadingActivities) {
     return (
       <View style={styles.loadingWrap}>
         <ActivityIndicator size="large" color="#93C5FD" />
@@ -40,20 +43,37 @@ export default function VehicleTimelineScreen() {
 
       <Text style={styles.sectionHeader}>Timeline</Text>
 
-      {timelineItems.length ? (
+      {errorMessage ? <Text style={styles.listErrorText}>{errorMessage}</Text> : null}
+
+      {activities.length ? (
         <View style={styles.timelineWrap}>
-          {timelineItems.map((item) => (
-            <View key={item.id} style={styles.timelineItem}>
-              <Text style={styles.timelineDate}>{item.date}</Text>
-              <Text style={styles.timelineTitle}>{item.title}</Text>
-              <Text style={styles.timelineDetail}>{item.detail}</Text>
-            </View>
+          {activities.map((item) => (
+            <Pressable
+              key={item.id}
+              style={styles.timelineItem}
+              onPress={() =>
+                router.push({
+                  pathname: '/vehicle/[vehicleId]/activity/[activityId]',
+                  params: { vehicleId, activityId: item.id },
+                })
+              }>
+              <View style={styles.timelineRow}>
+                <Text style={styles.timelineIcon}>{activityTypeIcon(item.activity_type)}</Text>
+                <View style={styles.timelineContent}>
+                  <Text style={styles.timelineDate}>{formatActivityDate(item.activity_date)}</Text>
+                  <Text style={styles.timelineTitle}>{item.title}</Text>
+                  <Text style={styles.timelineType}>{item.activity_type}</Text>
+                  <Text style={styles.timelineDetail}>{activitySummary(item.description)}</Text>
+                </View>
+                {item.photos[0] ? <Image source={item.photos[0]} style={styles.thumbnail} contentFit="cover" /> : null}
+              </View>
+            </Pressable>
           ))}
         </View>
       ) : (
         <View style={styles.emptyCard}>
           <Text style={styles.emptyTitle}>No activities yet</Text>
-          <Text style={styles.emptyText}>Timeline activity will appear here once available.</Text>
+          <Text style={styles.emptyText}>Create your first activity to start documenting this build.</Text>
         </View>
       )}
     </ScrollView>
@@ -102,6 +122,18 @@ const styles = StyleSheet.create({
     borderColor: '#334155',
     padding: 14,
   },
+  timelineRow: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'flex-start',
+  },
+  timelineIcon: {
+    fontSize: 20,
+    marginTop: 2,
+  },
+  timelineContent: {
+    flex: 1,
+  },
   timelineDate: {
     color: '#93C5FD',
     fontWeight: '600',
@@ -113,9 +145,23 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 6,
   },
+  timelineType: {
+    color: '#86EFAC',
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '600',
+  },
   timelineDetail: {
     color: '#CBD5E1',
     marginTop: 4,
+  },
+  thumbnail: {
+    width: 54,
+    height: 54,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#334155',
+    backgroundColor: '#0B1220',
   },
   emptyCard: {
     backgroundColor: '#1E293B',
@@ -132,5 +178,9 @@ const styles = StyleSheet.create({
   emptyText: {
     color: '#CBD5E1',
     marginTop: 6,
+  },
+  listErrorText: {
+    color: '#FCA5A5',
+    marginBottom: 10,
   },
 });

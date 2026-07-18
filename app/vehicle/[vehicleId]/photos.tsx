@@ -1,48 +1,33 @@
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
 
 import { PhotoGrid, PhotoLightbox, VehiclePhotoItem, VehicleWorkspaceHeader } from '@/components/vehicle-workspace';
 
+import { useVehicleActivities } from './use-activities';
 import { useVehicleWorkspace } from './workspace';
 
 export default function VehiclePhotosScreen() {
-  const { vehicle, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { vehicle, user, vehicleId, isLoading, feedbackMessage, vehicleTitle, vehicleSubtitle } = useVehicleWorkspace();
+  const { activities, isLoading: isLoadingActivities, errorMessage } = useVehicleActivities(user?.id, vehicleId);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isLightboxVisible, setIsLightboxVisible] = useState(false);
 
   const photos = useMemo<VehiclePhotoItem[]>(() => {
-    if (!vehicle) {
+    if (!vehicle || !activities.length) {
       return [];
     }
 
-    const items: VehiclePhotoItem[] = [];
-
-    if (vehicle.image_url) {
-      items.push({ id: 'hero', url: vehicle.image_url, label: 'Hero photo' });
-    }
-
-    items.push(
-      {
-        id: 'placeholder-1',
-        url: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
-        label: 'Front quarter view',
-      },
-      {
-        id: 'placeholder-2',
-        url: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80',
-        label: 'Garage profile',
-      },
-      {
-        id: 'placeholder-3',
-        url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
-        label: 'Rear view',
-      }
+    return activities.flatMap((activity) =>
+      activity.photos.map((url, index) => ({
+        id: `${activity.id}-${index}`,
+        url,
+        label: activity.title,
+      }))
     );
+  }, [activities, vehicle]);
 
-    return items;
-  }, [vehicle]);
-
-  if (isLoading) {
+  if (isLoading || isLoadingActivities) {
     return (
       <View style={styles.loadingWrap}>
         <ActivityIndicator size="large" color="#93C5FD" />
@@ -73,10 +58,23 @@ export default function VehiclePhotosScreen() {
       />
 
       <Text style={styles.sectionHeader}>Photos</Text>
+      {errorMessage ? <Text style={styles.listErrorText}>{errorMessage}</Text> : null}
       <PhotoGrid
         photos={photos}
         onPhotoPress={openLightbox}
-        onAddPhotos={() => Alert.alert('Add Photos', 'Photo upload is coming in a future sprint.')}
+        onAddPhotos={() =>
+          Alert.alert('Add Photos', 'Create or edit an activity and add photo URIs to attach images to it.', [
+            {
+              text: 'New Activity',
+              onPress: () =>
+                router.push({
+                  pathname: '/vehicle/[vehicleId]/activity/new',
+                  params: { vehicleId },
+                }),
+            },
+            { text: 'Cancel', style: 'cancel' },
+          ])
+        }
       />
 
       <PhotoLightbox
@@ -120,6 +118,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 20,
     fontWeight: '700',
+    marginBottom: 10,
+  },
+  listErrorText: {
+    color: '#FCA5A5',
     marginBottom: 10,
   },
 });

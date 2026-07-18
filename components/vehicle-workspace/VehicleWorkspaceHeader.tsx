@@ -8,6 +8,7 @@ interface VehicleWorkspaceHeaderProps {
   title: string;
   subtitle: string;
   activeSection: WorkspaceSection;
+  showNewActivityButton?: boolean;
 }
 
 const sections: { key: WorkspaceSection; label: string }[] = [
@@ -25,12 +26,32 @@ function sectionPath(section: WorkspaceSection) {
   return `/vehicle/[vehicleId]/${section}`;
 }
 
-export function VehicleWorkspaceHeader({ vehicleId, title, subtitle, activeSection }: VehicleWorkspaceHeaderProps) {
+export function VehicleWorkspaceHeader({
+  vehicleId,
+  title,
+  subtitle,
+  activeSection,
+  showNewActivityButton = true,
+}: VehicleWorkspaceHeaderProps) {
   return (
     <View style={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Text style={styles.backButtonText}>← Back</Text>
-      </Pressable>
+      <View style={styles.topRow}>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </Pressable>
+        {showNewActivityButton ? (
+          <Pressable
+            style={styles.newActivityButton}
+            onPress={() =>
+              router.push({
+                pathname: '/vehicle/[vehicleId]/activity/new',
+                params: { vehicleId },
+              })
+            }>
+            <Text style={styles.newActivityButtonText}>+ New Activity</Text>
+          </Pressable>
+        ) : null}
+      </View>
 
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>{subtitle}</Text>
@@ -64,6 +85,13 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
   },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 14,
+  },
   backButton: {
     alignSelf: 'flex-start',
     borderRadius: 8,
@@ -72,11 +100,21 @@ const styles = StyleSheet.create({
     borderColor: '#334155',
     paddingHorizontal: 12,
     paddingVertical: 8,
-    marginBottom: 14,
   },
   backButtonText: {
     color: '#E2E8F0',
     fontWeight: '600',
+  },
+  newActivityButton: {
+    borderRadius: 10,
+    backgroundColor: '#2563EB',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  newActivityButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: 13,
   },
   title: {
     color: '#FFFFFF',
