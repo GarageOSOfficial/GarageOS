@@ -13,7 +13,7 @@ function RootNavigator() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const segments = useSegments();
-  const { session, isLoading } = useAuth();
+  const { session, isLoading, isConfigured } = useAuth();
 
   useEffect(() => {
     if (isLoading) {
@@ -22,15 +22,15 @@ function RootNavigator() {
 
     const inAuthGroup = segments[0] === '(auth)';
 
-    if (!session && !inAuthGroup) {
+    if (!session && !inAuthGroup && isConfigured) {
       router.replace('/login');
       return;
     }
 
-    if (session && inAuthGroup) {
+    if (session && inAuthGroup && isConfigured) {
       router.replace('/(tabs)');
     }
-  }, [isLoading, router, segments, session]);
+  }, [isConfigured, isLoading, router, segments, session]);
 
   if (isLoading) {
     return (
