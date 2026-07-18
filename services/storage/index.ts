@@ -3,3 +3,5 @@
  */
 
 export * from './image-upload-service';
+
+export * from './document-upload-service';
